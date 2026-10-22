@@ -1,60 +1,71 @@
-# GitHub MCP — choose your tool
+# GitHub MCP setup
 
-Use the [official GitHub MCP server](https://github.com/github/github-mcp-server).
-Docker must be running for the local-server commands below. Choose a published server
-tag from the official releases, set `GITHUB_MCP_VERSION` to it, and record that exact
-version in `results/test-session-2.md`. Do not silently switch versions mid-assessment.
-
-Create a fine-grained GitHub token with access to the course repository and **Contents:
-read** and **Pull requests: read**. Keep `GITHUB_PERSONAL_ACCESS_TOKEN` in your shell's
-environment, never in a committed file. The official remote server with its documented
-authentication is also acceptable; record the transport and advertised tool names.
+Use [GitHub's hosted MCP server](https://github.com/github/github-mcp-server/blob/main/docs/remote-server.md)
+from the course walkthrough. Docker is not required. Keep a GitHub personal access token
+in `GITHUB_PERSONAL_ACCESS_TOKEN` in the environment of the client process, never in Git.
+For the required read-only exercises, use repository Contents and Pull requests read access.
 
 ## Codex CLI
 
-Register a local server; `-e NAME` forwards the environment variable without embedding its
-value in the command or configuration:
-
 ```sh
-codex mcp add github -- docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN -e GITHUB_READ_ONLY=1 "ghcr.io/github/github-mcp-server:${GITHUB_MCP_VERSION}"
+codex mcp add github --url https://api.githubcopilot.com/mcp/ --bearer-token-env-var GITHUB_PERSONAL_ACCESS_TOKEN
 ```
 
-Restart Codex. Use `/mcp` to inspect the connection and tools. Codex normally stores the
-registration in your user configuration; a project `.codex/config.toml` is ignored here.
-Never ignore all of `.codex/`: its `agents/` definitions belong in the submission.
+If `github` is already registered, update its existing entry instead of adding a second
+server. In your local `~/.codex/config.toml`, the entry for the course reads should be:
+
+```toml
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_PERSONAL_ACCESS_TOKEN"
+http_headers = { "X-MCP-Readonly" = "true" }
+```
+
+Start a new CLI session from the environment containing the token and use `/mcp` to
+check the connection. `bearer_token_env_var` stores the variable name, not the token.
+Codex Desktop is optional: use the same HTTP configuration and make the token available
+to the app process. An app already running does not inherit exports from another terminal.
 
 ## Claude Code
 
-Register the same read-only server in local scope:
+Add the hosted server to the ignored project `.mcp.json` (merge with existing entries):
 
-```sh
-claude mcp add --transport stdio --scope local github -- docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN -e GITHUB_READ_ONLY=1 "ghcr.io/github/github-mcp-server:${GITHUB_MCP_VERSION}"
+```json
+{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "X-MCP-Readonly": "true"
+      }
+    }
+  }
+}
 ```
 
-Restart Claude Code and use `/mcp`. If you configure a project `.mcp.json` manually,
-keep it ignored. `.claude/settings.local.json` is also ignored.
+Claude Code expands the environment variable at startup. Approve the project server
+and check `/mcp`. Keep `.mcp.json` and `.claude/settings.local.json` out of the submission.
 
-## Required exercise and evidence
+## Check the connection
 
-1. Set `review-target.json` to `mode: "github"`, owner `nebius-academy-templates`, repo
-   `go-pr-review-practice`, and the supplied 1–5 mapping.
-2. Verify the server advertises `pull_request_read`. Use `method: "get"` for identity and
-   head SHA, `get_diff` for changes, and paginated `get_files` when checking coverage.
-   Clients may prefix tool names; preserve the actual name in the transcript.
-3. Review PR-01, display the complete draft and ask to post. Answer `no`.
-4. Save the actual read call and response, review, question, and refusal in
-   `results/test-session-2.md`. Mask credentials without removing PR identity or tool names.
+Follow the platform lesson using `pull_request_read` with `get`, `get_diff` and, when
+needed, paginated `get_files`. Set `review-target.json` to `github` mode and retain the
+course repository and PR 1–5 mapping. Save the requested MCP call, review and declined
+confirmation in `results/test-session-2.md`. Record the endpoint and advertised tool
+names; hosted releases are managed by GitHub. Client prefixes may differ.
 
-Read-only server mode and credentials intentionally prevent publication. The exercise
-checks asking and declining; **no comment or pending review is required**. Never replace
-an MCP read with `gh`, `curl`, or a local sample and label it an MCP run.
+The exercises need no remote writes. Optional posting uses `add_issue_comment` and
+requires suitable write access, a connection that permits writes, and explicit approval
+of the displayed review and target. Never approve, merge or close a PR.
 
-The optional publication operation is `add_issue_comment`, an ordinary PR conversation
-comment. `add_comment_to_pending_review` and `pull_request_review_write` belong to a
-pending-review workflow and are not required. Publication would require a separate
-session with suitable write permissions and explicit approval of the displayed draft
-and target. Never approve, merge, or close the PR.
+## Optional local server
 
-Sources: [server tools and read-only mode](https://github.com/github/github-mcp-server),
-[Codex MCP](https://developers.openai.com/codex/mcp/),
-[Claude Code MCP](https://code.claude.com/docs/en/mcp).
+If hosted access is unavailable, use the [official Docker setup](https://github.com/github/github-mcp-server#local-github-mcp-server),
+with `GITHUB_READ_ONLY=1`, the token passed by environment, and a pinned release tag.
+Record the tag and transport. Existing Docker-based run evidence remains valid.
+
+References: [Codex MCP](https://learn.chatgpt.com/docs/extend/mcp),
+[GitHub Codex setup](https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-codex.md),
+[Claude Code environment expansion](https://code.claude.com/docs/en/mcp#environment-variable-expansion-in-mcpjson).

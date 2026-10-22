@@ -3,7 +3,7 @@
 Tool version: [PLACEHOLDER]
 Plugin version: [PLACEHOLDER]
 Model: [PLACEHOLDER]
-Token method: [PLACEHOLDER] — count each model-request usage record once; name the fields and treatment of cached usage.
+Token method: [PLACEHOLDER] — briefly explain how totals count each model request once.
 Expense metric: [PLACEHOLDER] — measured cost, or tokens if cost is unavailable.
 
 | Input | Trace ID | Total tokens | Most expensive span | security-reviewer called? |
@@ -14,15 +14,18 @@ Expense metric: [PLACEHOLDER] — measured cost, or tokens if cost is unavailabl
 | PR-04 | [PLACEHOLDER] | | | |
 | PR-05 | [PLACEHOLDER] | | | |
 
+Identify the most expensive span by name or ID and its cost/token value. Record unavailable
+metrics as `N/A: <reason>`. No separate model, parent ID or usage dump per reviewer is needed.
+
 ## PR-03 diagnostic
-- Called: [PLACEHOLDER]
-- Returned output (redacted): [PLACEHOLDER]
-- Final output preserves finding: [PLACEHOLDER]
-- Diagnosis supported by spans, or no failure: [PLACEHOLDER]
+- Security reviewer called: [PLACEHOLDER]
+- Returned finding: [PLACEHOLDER]
+- Finding preserved in final output: [PLACEHOLDER]
+- Supported diagnosis, including no failure when appropriate: [PLACEHOLDER]
 
 ## Saved span evidence
-For each case paste sanitized spans for all three reviewers and consolidation: actual
-case/PR/head, trace ID, span ID, parent ID, model, usage, input coverage and returned output.
-The reviewer cannot open trace links. Record missing usage as N/A with a reason.
+Paste only the short, redacted PR-03 excerpt needed to support the diagnosis: security
+invocation and relevant input, returned finding, and corresponding consolidation output.
+Identify the case and connect it to the table's trace. A trace link alone is insufficient.
 
 [PLACEHOLDER]

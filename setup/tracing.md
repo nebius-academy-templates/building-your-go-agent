@@ -33,7 +33,7 @@ not trust them. In the shell that starts Codex, set `TRACE_TO_LANGSMITH=true`,
 For EU accounts set `LANGSMITH_CODEX_ENDPOINT=https://eu.api.smith.langchain.com`.
 The plugin also supports ignored `.codex/langsmith.json`; never commit API keys there.
 
-## Codex desktop app
+## Codex Desktop (optional)
 
 The CLI setup above is not proof that the desktop app loads the same plugin or hooks.
 Shell exports may not reach an already running desktop app. Check plugin availability,
@@ -109,32 +109,21 @@ subagents or fabricate trace identifiers.
 
 ## Evidence to save
 
-In `results/observability-table.md`, save for each PR:
+Fill `results/observability-table.md` with five rows: trace ID, total tokens, the most
+expensive span (name or ID and cost/token value), and whether security was called.
+Record tool/plugin/model versions and the counting method once above the table.
 
-- Trace ID (URL optional), head SHA, tool/model versions and measured total tokens.
-- Most expensive span and whether expense means cost or tokens.
-- Pasted sanitized span data: parent/child IDs, reviewer identity, usage, relevant input
-  coverage and returned output. Include all three reviewers and consolidated output.
-- How totals were computed. Count each recorded model request's usage once; do not add
-  inclusive parent aggregates or cached-token subsets a second time. State which fields
-  were used and reconcile the sum with the source runtime counters.
+For PR-03, save a short redacted excerpt showing the security invocation and relevant
+input, its returned finding, and the corresponding consolidated output. Explain whether
+the finding survived and what caused any failure. A supported no-failure result is valid.
+No exports of every reviewer, parent IDs or per-reviewer model/usage records are required.
+If a final score fails, save only the additional excerpt needed to explain that failure
+in `results/evaluation.md`.
 
-In the tested Codex plugin 0.3.0, model usage can appear on tool spans and a waiting
-call can repeat the same request usage on a later LLM span. Thus the UI's LLM-only total
-can undercount, while summing all usage-bearing spans can overcount. For this version,
-use each distinct agent chain's exclusive `extra.metadata.ls_raw_aggregated_usage` once
-(root plus children), and reconcile the root counter with the CLI's final usage event.
-Use fresh single-turn sessions for that comparison. In resumed desktop chats, the root
-raw counter can include previous turns: use current-turn runtime usage or verified
-counter deltas, then add the fresh children once. Record the turn ID and the method.
-Keep `extra.metadata.usage_metadata` for per-request/span analysis; establish request
-identity from events before deduplicating, never from equal numbers alone. Save the UI,
-naive span sum and reconciled total separately. These raw counters are not the UI's
-inclusive parent totals. Do not infer actual cache creation from this version's
-`cache_creation` field: it contains reasoning output counts. Use tokens as the expense
-metric if displayed cost cannot be reconciled.
-
-If usage is absent, record `N/A: <specific reason>` and available evidence. This does
-not prove full observability support: flag the limitation for the course owner instead
-of inventing a measurement. Answer the PR-03 diagnostic using saved span output,
-including a supported no-failure conclusion when appropriate.
+Count model-request usage once. Do not add inclusive parent totals or cached subsets
+again. With Codex plugin 0.3.0, UI totals may undercount and wait/LLM events may repeat
+usage: use unique request records or exclusive per-agent counters. For resumed chats,
+exclude earlier turns. Briefly state the method; copying the raw counters is optional.
+Use tokens if currency cost cannot be reconciled. Mark unavailable values `N/A: <reason>`
+and report the limitation rather than inventing measurements. Inspect child runs in
+LangSmith, but commit only the table and diagnostic excerpt needed for offline assessment.
