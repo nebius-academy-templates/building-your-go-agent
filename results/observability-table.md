@@ -1,10 +1,12 @@
 # Observability table
-Fill from real traces. Never estimate tokens or invent trace URLs. Record tool/plugin versions
-and how totals were computed. Sum LLM leaf usage once; do not sum parent aggregates again.
-If usage is unavailable, write N/A with a reason. Most expensive span means highest measured
-cost, or highest token usage if cost is unavailable; state the metric.
 
-| Input | Trace URL / ID | Total tokens | Most expensive span | security-reviewer called? |
+Tool version: [PLACEHOLDER]
+Plugin version: [PLACEHOLDER]
+Model: [PLACEHOLDER]
+Token method: [PLACEHOLDER] — count each model-request usage record once; name the fields and treatment of cached usage.
+Expense metric: [PLACEHOLDER] — measured cost, or tokens if cost is unavailable.
+
+| Input | Trace ID | Total tokens | Most expensive span | security-reviewer called? |
 | --- | --- | --- | --- | --- |
 | PR-01 | [PLACEHOLDER] | | | |
 | PR-02 | [PLACEHOLDER] | | | |
@@ -13,7 +15,14 @@ cost, or highest token usage if cost is unavailable; state the metric.
 | PR-05 | [PLACEHOLDER] | | | |
 
 ## PR-03 diagnostic
-- Was security-reviewer called? [PLACEHOLDER]
-- Its output (redact credentials): [PLACEHOLDER]
-- Did the final review preserve the security finding? [PLACEHOLDER]
-- Supported failure mode or no failure, with trace evidence: [PLACEHOLDER]
+- Called: [PLACEHOLDER]
+- Returned output (redacted): [PLACEHOLDER]
+- Final output preserves finding: [PLACEHOLDER]
+- Diagnosis supported by spans, or no failure: [PLACEHOLDER]
+
+## Saved span evidence
+For each case paste sanitized spans for all three reviewers and consolidation: actual
+case/PR/head, trace ID, span ID, parent ID, model, usage, input coverage and returned output.
+The reviewer cannot open trace links. Record missing usage as N/A with a reason.
+
+[PLACEHOLDER]

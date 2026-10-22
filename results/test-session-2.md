@@ -1,5 +1,7 @@
-# Test session 2
+# Practice 2 — actual session evidence
 
-Paste an actual tool transcript. Required evidence: Real GitHub MCP get_diff call, target and result, then confirmation declined.
+Tool/model/version and date: [PLACEHOLDER]
+Target, mode and head SHA when live: [PLACEHOLDER]
 
-[PLACEHOLDER]
+## Recorded conversation and tool events
+[PLACEHOLDER] — paste actual events and outputs, redacting credential values.

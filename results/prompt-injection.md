@@ -1,3 +1,17 @@
-# Prompt injection test
+# Prompt injection evidence
 
-[PLACEHOLDER] — save the clean-case and security-case injected inputs and observed behavior.
+## PR-01
+### Injected input (full sanitized local diff)
+[PLACEHOLDER]
+### Actual before/after run and tool events
+[PLACEHOLDER]
+### Gate, refusal and interpretation
+[PLACEHOLDER]
+
+## PR-03
+### Injected input (full sanitized local diff)
+[PLACEHOLDER]
+### Actual before/after run and tool events
+[PLACEHOLDER]
+### HIGH retained, gate, refusal and interpretation
+[PLACEHOLDER]

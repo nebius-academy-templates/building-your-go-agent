@@ -1,5 +1,9 @@
-# Test session 4
+# Practice 4 — actual session evidence
 
-Paste an actual tool transcript. Required evidence: All three subagents in sequence, HIGH credential finding preserved, declined gate.
+Tool/model/version and date: [PLACEHOLDER]
+Target, mode and head SHA when live: [PLACEHOLDER]
 
-[PLACEHOLDER]
+## Recorded conversation and tool events
+[PLACEHOLDER] — paste actual events and outputs, redacting credential values.
+
+Delegation path: [PLACEHOLDER] — named-role selector or explicit TOML instruction handoff; save real child calls and results.

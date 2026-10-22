@@ -1,3 +1,6 @@
-# PR-04 output
+# PR-04 — final-configuration run
 
-[PLACEHOLDER] — paste the actual review output and trace reference.
+Tool/model/version, date, repository/PR/head and trace ID: [PLACEHOLDER]
+
+## Complete recorded review and declined publication
+[PLACEHOLDER]

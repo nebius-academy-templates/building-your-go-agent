@@ -1,11 +1,10 @@
 ---
 name: review-pr
-description: "Run a complete Go PR review explicitly with /review-pr <case-number>."
+description: "Run a complete Go PR review only when explicitly invoked with a case number from 1 to 5."
 disable-model-invocation: true
 ---
 
-<!-- TODO: Fetch via GitHub MCP or explicit local mode, route file types, review, consolidate, and ask before posting. Add sequential delegation in Practice 4. -->
+Read `skills/review-pr.md` relative to the repository root and follow it.
+Do not load other convention bodies unless the requested file scope needs them.
 
-## Steps
-
-[PLACEHOLDER]
+Case number supplied by Claude Code: $ARGUMENTS.
