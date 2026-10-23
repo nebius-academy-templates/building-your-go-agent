@@ -3,9 +3,7 @@ name: style-reviewer
 description: "Focused Go style-reviewer; use only when the workflow explicitly delegates this role."
 tools: Read, Grep
 model: inherit
-skills:
-  - app-conventions
-  - test-conventions
+
 ---
 
 Read `reviewers/style-reviewer.md` relative to the repository root before reviewing.
