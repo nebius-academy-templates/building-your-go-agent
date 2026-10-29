@@ -10,4 +10,15 @@
 .DS_Store
 bin/
 coverage.out
-# Skill and agent definitions under .claude/ must remain tracked.
+# Native skills/agents, shared prompts and redacted evidence remain tracked.
+
+# Local credential/configuration files; never ignore entire agent directories.
+.claude/langsmith.json
+.codex/config.toml
+.codex/auth.json
+.codex/langsmith.json
+langsmith-plugins.json
+.local/
+results/*-injected.diff
+__pycache__/
+*.pyc

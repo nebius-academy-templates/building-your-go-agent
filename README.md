@@ -1,29 +1,25 @@
 # Building Your Go Agent
-Build a PR Review Agent for Go. The agent runs in your
-coding tool; this repository is its configuration, not a Go implementation of an LLM agent.
-Complete placeholders only for the current stage.
 
-## Practices
-1. System prompt and format, publish-gate, scope-refusal evidence.
-2. GitHub MCP connection and live PR review.
-3. Selective convention skills and /review-pr workflow.
-4. Three sequential reviewer subagents.
-5. Episodic history and ADR-backed semantic memory.
-6. LangSmith tracing and measured observability.
-7. Five-input evaluation, injection testing, and an evidence-backed improvement.
+Build a Go pull-request reviewer with **Codex CLI or Claude Code**. Codex Desktop is
+an optional alternative; use a trusted project and submit tracing exercises manually.
+Choose `codex` or `claude` in `review-target.json`; complete only the selected tool's setup.
 
-All evidence lives under results/. Never submit illustrative reviewer examples as real runs.
-The .claude/ layout targets Claude Code; equivalent tool-native layouts are acceptable when
-supported by the course's validator. Do not assume another tool understands these files.
+Follow the **Building Your Go Agent lesson on the course platform** for the assignments,
+steps and acceptance criteria. This repository supplies the working files, not a second
+copy of the lesson. [Practice overview](practice-description.md) lists the seven stages.
 
-## Inputs
-samples/ contains all five standalone diffs. PR-01 is clean; PR-02 has style issues;
-PR-03 hardcodes a synthetic credential; PR-04 bypasses a repository; PR-05 mixes categories.
-Read fixture-policy.md. Supporting Go source is in the separately supplied fixture repository.
+- [GitHub MCP setup](setup/github-mcp.md): the hosted server is the default; Docker is optional.
+- [LangSmith setup](setup/tracing.md): CLI, optional desktop and Claude Code configuration.
+- [Course PRs](https://github.com/nebius-academy-templates/go-pr-review-practice): five
+  independent review inputs, with matching local diffs in `samples/`.
+- [Fixture policy](fixture-policy.md): keep the teaching inputs unchanged and redact credentials.
 
-## Target setup
-review-target.json starts in local mode. The instructor provides the real GitHub owner and
-actual PR-number mapping. Set mode to github for Practice 2 and live workflow runs.
-No hosted Go practice repository is assumed to exist. Case numbers 1–5 are stable exercise
-IDs; GitHub PR numbers may differ. For example, /review-pr 4 resolves the mapping for case 4.
-No credential belongs in review-target.json. See setup/github-mcp.md and setup/tracing.md.
+Shared instructions live in `AGENTS.md`, `skills/` and `reviewers/`. Native entry points
+live in `.agents/` and `.codex/` for Codex, and `.claude/` plus `CLAUDE.md` for Claude Code.
+Use `$review-pr 3` in Codex or `/review-pr 3` in Claude Code once the workflow is configured.
+
+Keep cumulative work and the existing filenames. Save real, redacted evidence in
+`results/`, use LF endings, and keep credentials and local configuration out of Git.
+For observability, fill the five-row table and save the short PR-03 diagnostic excerpt;
+full exports for every reviewer are not required. Automated checks run before an AI
+reviewer reads the committed files. It cannot run code or open trace links.
