@@ -19,6 +19,7 @@ metrics as `N/A: <reason>`. No separate model, parent ID or usage dump per revie
 
 ## PR-03 diagnostic
 - Security reviewer called: [PLACEHOLDER]
+- Received the correct PR-03 diff: [PLACEHOLDER]
 - Returned finding: [PLACEHOLDER]
 - Finding preserved in final output: [PLACEHOLDER]
 - Supported diagnosis, including no failure when appropriate: [PLACEHOLDER]
